@@ -1,0 +1,23 @@
+.single-product{
+    display: flex;
+    border-bottom: 1px solid green;
+    margin-bottom:10px;
+    margin-right: 10px;
+    padding-bottom: 10px;
+}
+
+.product-name{
+    color:indigo;
+    font-weight: 400;
+
+}
+
+.cart-button{
+    background-color: lawngreen;
+    width: 250px;
+    height: 40px;
+    border:1px solid black;
+    border-radius: 10px;
+    font-size: 18px;
+    margin-left: 100px;
+}
