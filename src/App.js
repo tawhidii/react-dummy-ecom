@@ -9,6 +9,7 @@ import {BrowserRouter as Router,
 import Review from './components/Review/Review';
 import Inventory from './components/Inventory/Inventory';
 import NotFound404 from './components/404/NotFound404';
+import ProductDetail from './components/ProductDetail/ProductDetail';
 
 function App() {
   return (
@@ -31,10 +32,13 @@ function App() {
           <Route exact path="/"> 
           <Shop></Shop>
           </Route>
-
+          <Route path="/product/:productkey"> 
+          <ProductDetail></ProductDetail>
+          </Route>
           <Route path="*">
           <NotFound404></NotFound404>
           </Route>
+  
         </Switch>
       </Router>
     </div>
