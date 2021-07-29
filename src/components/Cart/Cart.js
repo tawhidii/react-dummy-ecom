@@ -1,10 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+
 
 const Cart = (props) => {
     const cart = props.cart
+    console.log(cart)
     const totalPrice = cart.reduce((total,prd)=>{
-        return total + prd.price
+        return total + prd.price * prd.quantity
+    
     },0)
     let shippingCost = 0
     if(totalPrice>15){
@@ -20,9 +22,12 @@ const Cart = (props) => {
             <p>Items: {totalPrice.toFixed(2)}</p>
             <p>Shipping Cost:{shippingCost}</p>
             <p>Total:{grandTotal}</p>
-            <Link to="/review"><button className="cart-button">Reveiw order</button></Link>
+            {
+                props.children
+            }
         </div>
     );
 };
 
 export default Cart;
+

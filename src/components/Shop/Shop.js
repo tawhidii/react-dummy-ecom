@@ -1,19 +1,44 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Shop.css';
 import Product from '../Products/Product';
 import fakeData from '../../fakeData'
 import Cart from '../Cart/Cart';
-import { addToDatabaseCart } from '../../utilities/databaseManager';
+import { Link } from 'react-router-dom';
+import { addToDatabaseCart, getDatabaseCart } from '../../utilities/databaseManager';
 const Shop = () => {
     const firstTenData = fakeData.slice(0,10)
     const [products] = useState(firstTenData)
     const [cart,setCart] = useState([])
 
+    
+    useEffect(()=>{
+        const savedCart = getDatabaseCart()
+        const productKeys = Object.keys(savedCart)
+        const cartProducts = productKeys.map(key=>{
+            const product = fakeData.find(pd=>pd.key === key)
+            product.quantity = savedCart[key]
+            return product
+        })
+
+        setCart(cartProducts)
+
+    },[])
+
     const handleAddProduct = (product) =>{
-        const newCart = [...cart,product]
-        const sameProduct = newCart.filter(pd=>pd.key===product.key)
-        let count = sameProduct.length
-        console.log(count)
+        const productToBeaddedKey = product.key
+        const sameProduct = cart.find(pd=>pd.key===productToBeaddedKey)
+        let count = 1
+        let newCart;
+        if(sameProduct){
+            const count = sameProduct.quantity + 1
+            sameProduct.quantity = count
+            const others = cart.filter(pd=>pd.key !== productToBeaddedKey)
+            newCart = [...others,sameProduct]
+        }else{
+            product.quantity = 1
+            newCart = [...cart,product]
+       
+        }
         setCart(newCart)
         addToDatabaseCart(product.key,count)
         
@@ -28,7 +53,9 @@ const Shop = () => {
                 }
             </div>
             <div  className="cart-container">
-                <Cart cart={cart}></Cart>
+                <Cart cart={cart}>
+                <Link to="/review"><button className="cart-button">Reveiw order</button></Link>
+                </Cart>
             </div>
     
            
