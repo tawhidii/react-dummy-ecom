@@ -22,3 +22,6 @@
     margin-left: 50px;
     cursor: pointer;
 }
+.product-name a{
+    text-decoration: none;
+}
